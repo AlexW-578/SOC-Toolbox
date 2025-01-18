@@ -15,8 +15,6 @@
     "contextMenus",
     "tabs",
     "notifications",
-    "scripting",
-    "webNavigation",
     "downloads",
     "storage",
     "bookmarks",
