@@ -2,9 +2,7 @@
 <html lang="en">
 
 <head>
-    <script src="externalScripts/jquery-3.5.1.min.js"
-        integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2"
-        crossorigin="anonymous"></script>
+    <script src="externalScripts/jquery-3.5.1.min.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -16,8 +14,7 @@
     <title>SOC ToolBox</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
     <!-- Custom styles for this template -->
     <style type="text/css">
@@ -71,6 +68,33 @@
                 </div>
             </div>
         </div>
+        <div id="TicketDesks">
+            <h1>Ticket Desks</h1>
+            <h2>Jira</h2>
+            <label>
+                Enable Jira:
+                <input type="checkbox" id="jira_manager" checked=false />
+            </label>
+            <h3>Set Jira data:</h3>
+            <div id="jira_Options">
+                <div>
+                    Jira Workspace URL (e.g. <i>example.atlassian.net</i>):
+                    <input type="text" id="jira_workspace" value="">
+                </div>
+            </div>
+            <h2>AutoTask</h2>
+            <label>
+                Enable AutoTask:
+                <input type="checkbox" id="autotask_manager" checked=false />
+            </label>
+            <h3>Set AutoTask data:</h3>
+            <div id="autotask_Options">
+                <div>
+                    AutoTask Workspace URL (e.g. <i>example.autotask.net</i>):
+                    <input type="text" id="autotask_workspace" value="">
+                </div>
+            </div>
+        </div>
         <script src="scripts/options.js"></script>
     </center>
 </body>
@@ -90,14 +114,9 @@
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <!-- from www.srihash.org -->
-<script src="/externalScripts/popper.min.js"
-    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-    crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-<script src="/externalScripts/bootstrap.min.js"
-    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-    crossorigin="anonymous"></script>
+<script src="/externalScripts/popper.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="/externalScripts/bootstrap.min.js"></script>
 <center>
 
 </html>
