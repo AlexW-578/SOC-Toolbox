@@ -50,9 +50,33 @@ function create_children(parent_name, children) {
 
 async function create_ticket_context_menu() {
   await set_options();
-  if (storage.jira_manager && storage.jira_workspace != "") {
+  var autotask_exists = false;
+  var jira_exists = false;
+  items.forEach(item => {
+    if (item.Name == "AutoTask") {
+      autotask_exists = true
+      console.log("Autotask Already exists")
+    }
+    if (item.Name == "Jira") {
+      jira_exists = true
+      console.log("Jira Already exists")
+    }
+  });
+  if (storage.autotask_manager && storage.autotask_workspace != "" && !autotask_exists) {
+    autotask.forEach(element => {
+      element.link = element.link.replace("${autotask_workspace}", storage.autotask_workspace)
+    });
+    var autotask_menu = {
+      Name: "AutoTask",
+      isParent: true,
+      children: autotask,
+      contexts: ['selection', 'page']
+    }
+    items.unshift(autotask_menu)
+  }
+  if (storage.jira_manager && storage.jira_workspace != "" && !jira_exists) {
     jira.forEach(element => {
-      element.link.replace("${jira_workspace}", storage.jira_workspace)
+      element.link = element.link.replace("${jira_workspace}", storage.jira_workspace)
     });
     var jira_menu = {
       Name: "Jira",
@@ -60,19 +84,7 @@ async function create_ticket_context_menu() {
       children: jira,
       contexts: ['selection', 'page']
     }
-    items.push(jira_menu)
-  }
-  if (storage.autotask_manager && storage.autotask_workspace != '') {
-    autotask.forEach(element => {
-      element.link.replace("${autotask_workspace}", storage.autotask_workspace)
-    });
-    var autotask_menu = {
-      Name: "AutoTask",
-      isParent: true,
-      children: AutoTask,
-      contexts: ['selection', 'page']
-    }
-    items.push(autotask_menu)
+    items.unshift(jira_menu)
   }
 }
 
@@ -154,7 +166,7 @@ browser.omnibox.onInputEntered.addListener((text) => {
 });
 
 browser.storage.onChanged.addListener(
-  (changes, areaName) => { set_options(); }
+  (changes, areaName) => { set_options(); Start(); }
 )
 if ('object' == typeof browser.downloads.onDeterminingFilename) {
   browser.downloads.onDeterminingFilename.addListener(

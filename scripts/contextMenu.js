@@ -527,7 +527,7 @@ const jira = [
     {
         Name: "Search Confluence",
         isParent: false,
-        link: "https://${jira_workspace}t/wiki/search?text=${query}",
+        link: "https://${jira_workspace}/wiki/search?text=${query}",
         contexts: ['selection']
     },
 ]
