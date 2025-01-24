@@ -3,7 +3,7 @@
   "name": "SOC ToolBox",
   "description": "The SOC ToolBox is a browser extension aimed at helping security analysts perform investigations.",
   "author": "soc-toolbox@alexw-578.co.uk",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "icons": {
     "16": "img/16.png",
     "32": "img/32.png",
@@ -13,7 +13,6 @@
   },
   "permissions": [
     "contextMenus",
-    "tabs",
     "notifications",
     "downloads",
     "storage",
