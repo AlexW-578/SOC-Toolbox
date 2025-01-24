@@ -49,7 +49,6 @@ function create_children(parent_name, children) {
 }
 
 async function create_ticket_context_menu() {
-  await set_options();
   var autotask_exists = false;
   var jira_exists = false;
   items.forEach(item => {
