@@ -453,13 +453,13 @@ const items = [
         Name: "IP OSINT",
         isParent: true,
         children: IP_Lookup,
-        contexts: ['link', 'selection','page']
+        contexts: ['link', 'selection', 'page']
     },
     {
         Name: "Domain OSINT",
         isParent: true,
         children: Domain_lookup,
-        contexts: ['link', 'selection','page']
+        contexts: ['link', 'selection', 'page']
     },
     {
         Name: "Hash OSINT",
@@ -471,7 +471,7 @@ const items = [
         Name: "User OSINT",
         isParent: true,
         children: User_OSINT,
-        contexts: ['page','page']
+        contexts: ['page', 'page']
     },
     {
         Name: "Cyber Chef",
@@ -511,6 +511,47 @@ const items = [
     // },
 ]
 
+const jira = [
+    {
+        Name: "Search Jira",
+        isParent: false,
+        link: "https://${jira_workspace}/issues/?jql=(text%20~%20%22${query}%22)",
+        contexts: ['selection', 'page']
+    },
+    {
+        Name: "Open Jira ID",
+        isParent: false,
+        link: "https://${jira_workspace}/browse/${query}",
+        contexts: ['selection']
+    },
+    {
+        Name: "Search Confluence",
+        isParent: false,
+        link: "https://${jira_workspace}/wiki/search?text=${query}",
+        contexts: ['selection']
+    },
+]
+const autotask = [
+    {
+        Name: "Search AutoTask",
+        isParent: false,
+        link: "https://${autotask_workspace}/Mvc/ServiceDesk/TicketGridSearch.mvc/SearchByTicketNumberOrTitleOrDescription?TicketNumberOrTitleOrDescription=${query}",
+        contexts: ['page', 'selection']
+    },
+    {
+        Name: "Search AutoTask Global Notes",
+        isParent: false,
+        link: "https://${autotask_workspace}/home/Global_Notes_Search/searchBody.asp?txtSearchFor=${query}&chkWrkflowRule=on&forClient=&actionType=-1&selNoteType=-1&selPostedBy=-1&fromDatePosted=&toDatePosted=&showCriteria=1&forClientID=&projectList=",
+        contexts: ['selection']
+    },
+    {
+        Name: "Open Ticket Number",
+        isParent: false,
+        link: "https://${autotask_workspace}/Mvc/ServiceDesk/TicketDetail.mvc/TicketByTicketNumber?ticketNumber=${query}",
+        contexts: ['selection']
+    },
+]
+
 // Array to use in the OmniBox.
 const OmniBox_Links = {
     "ip": "https://www.abuseipdb.com/check/${query}",
@@ -521,4 +562,4 @@ const OmniBox_Links = {
     "we": "https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=${query}",
 }
 
-export { create_bookmarks, byte_format, items, QuickLinks, Misc, Search_Engines, IP_Lookup, Hash_Lookup, OmniBox_Links }
+export { create_bookmarks, byte_format, items, QuickLinks, Misc, Search_Engines, IP_Lookup, Hash_Lookup, OmniBox_Links, jira, autotask }

@@ -1,4 +1,4 @@
-import { create_bookmarks, byte_format, items, QuickLinks, Misc, Search_Engines, IP_Lookup, Hash_Lookup, OmniBox_Links } from "./contextMenu.js";
+import { create_bookmarks, byte_format, items, QuickLinks, Misc, Search_Engines, IP_Lookup, Hash_Lookup, OmniBox_Links, jira, autotask } from "./contextMenu.js";
 
 var storage = {}
 
@@ -11,19 +11,27 @@ Start();
 
 async function set_options() {
   var options = await browser.storage.local.get({
-    download_manager: false,
     email_directory: '',
     PDF_directory: '',
     csv_dir: '',
     zip_dir: '',
     json_dir: '',
+    download_manager: false,
+    jira_manager: false,
+    jira_workspace: '',
+    autotask_manager: false,
+    autotask_workspace: '',
   })
-  storage["email_directory"] = options.email_directory;
-  storage["PDF_directory"] = options.PDF_directory;
-  storage["csv_dir"] = options.csv_dir;
-  storage["zip_dir"] = options.zip_dir;
-  storage["json_dir"] = options.json_dir;
-  storage["download_manager"] = options.download_manager
+  storage.email_directory = options.email_directory;
+  storage.PDF_directory = options.PDF_directory;
+  storage.csv_dir = options.csv_dir;
+  storage.zip_dir = options.zip_dir;
+  storage.json_dir = options.json_dir;
+  storage.download_manager = options.download_manager
+  storage.jira_manager = options.jira_manager
+  storage.jira_workspace = options.jira_workspace
+  storage.autotask_manager = options.autotask_manager
+  storage.autotask_workspace = options.autotask_workspace
 }
 
 function create_children(parent_name, children) {
@@ -40,10 +48,49 @@ function create_children(parent_name, children) {
   }
 }
 
+async function create_ticket_context_menu() {
+  var autotask_exists = false;
+  var jira_exists = false;
+  items.forEach(item => {
+    if (item.Name == "AutoTask") {
+      autotask_exists = true
+      console.log("Autotask Already exists")
+    }
+    if (item.Name == "Jira") {
+      jira_exists = true
+      console.log("Jira Already exists")
+    }
+  });
+  if (storage.autotask_manager && storage.autotask_workspace != "" && !autotask_exists) {
+    autotask.forEach(element => {
+      element.link = element.link.replace("${autotask_workspace}", storage.autotask_workspace)
+    });
+    var autotask_menu = {
+      Name: "AutoTask",
+      isParent: true,
+      children: autotask,
+      contexts: ['selection', 'page']
+    }
+    items.unshift(autotask_menu)
+  }
+  if (storage.jira_manager && storage.jira_workspace != "" && !jira_exists) {
+    jira.forEach(element => {
+      element.link = element.link.replace("${jira_workspace}", storage.jira_workspace)
+    });
+    var jira_menu = {
+      Name: "Jira",
+      isParent: true,
+      children: jira,
+      contexts: ['selection', 'page']
+    }
+    items.unshift(jira_menu)
+  }
+}
 
-function Start() {
-  set_options();
+async function Start() {
+  await set_options();
   browser.contextMenus.removeAll();
+  await create_ticket_context_menu();
   for (let item_number = 0; item_number < items.length; item_number++) {
     browser.contextMenus.create({
       title: items[item_number].Name,
@@ -52,7 +99,8 @@ function Start() {
     })
     if (items[item_number].isParent) {
       create_children(items[item_number].Name, items[item_number].children.sort())
-    }  }
+    }
+  }
 }
 
 
@@ -117,7 +165,7 @@ browser.omnibox.onInputEntered.addListener((text) => {
 });
 
 browser.storage.onChanged.addListener(
-  (changes, areaName) => { set_options(); }
+  (changes, areaName) => { set_options(); Start(); }
 )
 if ('object' == typeof browser.downloads.onDeterminingFilename) {
   browser.downloads.onDeterminingFilename.addListener(
